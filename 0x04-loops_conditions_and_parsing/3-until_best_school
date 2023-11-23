@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Displays Best School 10 times using the until loop
+
+var=10
+until [ $var -lt 1 ]; do
+	: $(( var-- ))
+	echo "Best School"
+done
