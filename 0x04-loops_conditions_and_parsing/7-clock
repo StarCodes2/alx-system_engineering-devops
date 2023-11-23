@@ -6,7 +6,7 @@ h=0
 while [ $h -lt 13 ]; do
 	if [ $m -eq 0 ] || [ $m -eq 60 ];
 	then
-		echo "hour: $h"
+		echo "Hour: $h"
 		: $(( h++ ))
 		m=1
 	else
