@@ -3,7 +3,7 @@
 
 m=0
 h=0
-while [ $h -lt 13 ]; do
+while [ $h -lt 13 ] || [ $m -lt 60 ]; do
 	if [ $m -eq 0 ] || [ $m -eq 60 ]
 	then
 		echo "Hour: $h"

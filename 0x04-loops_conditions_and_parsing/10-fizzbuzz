@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Display 1 to 100 but replace values that are multuples of 3 & 5 with FizzBuzz, multiples of 3 with Fizz and multiples of 5 with Buzz
+
+for i in {1..100}; do
+	if [ $((i % 3)) -eq 0 ] && [ $((i % 5)) -eq 0 ]
+	then
+		echo "FizzBuzz"
+	elif [ $((i % 3)) -eq 0 ]
+	then
+		echo "Fizz"
+	elif [ $((i % 5)) -eq 0 ]
+	then
+		echo "Buzz"
+	else
+		echo $i
+	fi
+done
