@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Display it's own process id
+
+echo $$
