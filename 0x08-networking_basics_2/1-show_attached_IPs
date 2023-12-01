@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Listens on 98 on localhost
+ifconfig | grep -Eo "inet (addr:)?(\d+\.){3}\d+" | cut -b 11-
