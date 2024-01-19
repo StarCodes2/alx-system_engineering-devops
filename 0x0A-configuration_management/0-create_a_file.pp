@@ -1,4 +1,4 @@
-file { 'tmp/school':
+file { '/tmp/school':
   ensure => 'file',
   owner  =>  'www-data',
   group  => 'www-data',
@@ -6,6 +6,6 @@ file { 'tmp/school':
 }
 
 exec { 'file content':
-  command => '/usr/bin/echo I love Puppet > tmp/school',
-  require => File['tmp/school']
+  command => '/usr/bin/echo I love Puppet > /tmp/school',
+  require => File['/tmp/school']
 }
