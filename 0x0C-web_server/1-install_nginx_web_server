@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Install Nginx, configure it to listen on port 80 and returns a page containing the string 'Hello World!' when queried with curl
+apt-get update
+apt-get -y install nginx
+
+mkdir /etc/nginx/html
+echo "Hello World!" > /etc/nginx/html/index.html
+printf %s "server {
+	listen	80 default-server;
+	listen	[::]:80 default-server;
+	root	/etc/nginx/html;
+	index	index.html index.htm;
+}" > /etc/nginx/site-available/default
+service nginx restart
