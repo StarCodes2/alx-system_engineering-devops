@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Debug docter
+echo "ServerName localhost" >> /etc/apache2.conf
+service apache2 start
