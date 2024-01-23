@@ -15,7 +15,7 @@ file { '/etc/nginx/html':
   ensure  => 'directory',
   owner   => 'root',
   group   => 'root',
-  mode    => '0644',
+  mode    => '0755',
   require => Exec['install nginx'],
 }
 
