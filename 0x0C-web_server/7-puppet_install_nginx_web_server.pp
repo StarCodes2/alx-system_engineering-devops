@@ -24,11 +24,6 @@ exec { 'index':
   require => File['/etc/nginx/html'],
 }
 
-exec { '404':
-  command => "/bin/echo Ceci n'est pas une page > /etc/nginx/html/404.html",
-  require => File['/etc/nginx/html'],
-}
-
 file { '/etc/nginx/sites-available/default':
   ensure  => 'file',
   owner   => 'root',
@@ -43,12 +38,6 @@ file { '/etc/nginx/sites-available/default':
 
 	location /redirect_me {
 		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-	}
-
-	error_page 404 /404.html;
-	location /404 {
-		root /etc/nginx/html;
-		internal;
 	}
 }",
   notify  => Service['nginx'],
