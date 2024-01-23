@@ -6,9 +6,9 @@ apt-get -y install nginx
 mkdir /etc/nginx/html
 echo "Hello World!" > /etc/nginx/html/index.html
 printf %s "server {
-	listen	80 default-server;
-	listen	[::]:80 default-server;
-	root	/etc/nginx/html;
-	index	index.html index.htm;
-}" > /etc/nginx/site-available/default
+	listen 80 default-server;
+	listen [::]:80 default-server;
+	root /etc/nginx/html;
+	index index.html index.htm;
+}" > /etc/nginx/sites-available/default
 service nginx restart
