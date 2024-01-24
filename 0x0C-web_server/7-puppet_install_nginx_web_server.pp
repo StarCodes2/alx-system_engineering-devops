@@ -33,7 +33,7 @@ exec { 'index':
 
 exec { 'config':
   command => |
-  'printf %s "server {
+  '/usr/bin/printf %s "server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	root /var/www/ezekielogunewu.tech/html;
