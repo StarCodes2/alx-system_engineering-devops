@@ -32,23 +32,7 @@ exec { 'index':
 }
 
 exec { 'config':
-  command => |
-  '/usr/bin/printf %s "server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/ezekielogunewu.tech/html;
-	index index.html index.htm;
-
-	server_name ezekielogunewu.tech;
-
-	location /redirect_me {
-		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-	}
-
-	location / {
-		try_files $uri $uri/ =404;
-	}
-}" > /etc/nginx/sites-available/default',
+  command => '/bin/echo "server {\n	listen 80 default_server;\n	listen [::]:80 default_server;\n	root /var/www/ezekielogunewu.tech/html;\n	index index.html index.htm;\n\n	location /redirect_me {\n		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n	}\n}" > /etc/nginx/sites-available/default',
   notify  => Service['nginx'],
   require => Exec['install nginx'],
 }
