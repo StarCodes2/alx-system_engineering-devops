@@ -11,35 +11,44 @@ exec { 'install nginx':
   require => Exec['apt-get update'],
 }
 
-file { '/etc/nginx/html':
-  ensure  => 'directory',
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0755',
+exec { 'file structure':
+  command => '/usr/bin/mkdir -p /var/www/ezekielogunewu.tech/html',
   require => Exec['install nginx'],
 }
 
-exec { 'index':
-  command => '/bin/echo "Hello World!" > /etc/nginx/html/index.html',
-  require => File['/etc/nginx/html'],
+exec { 'change mode':
+  command => '/usr/bin/chmod -R $USER:$USER /var/www/ezekielogunewu.tech/html',
+  require => Exec['file structure'],
 }
 
-file { '/etc/nginx/sites-available/default':
-  ensure  => 'file',
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0644',
-  content => |
-"server {
-	listen	80 default_server;
-	listen	[::]:80 default_server;
-	root	/etc/nginx/html;
-	index	index.html index.htm;
+exec { 'change mode2':
+  command => '/usr/bin/chmod -R 755 /var/www',
+  require => Exec['change mode'],
+}
+
+exec { 'index':
+  command => '/bin/echo "Hello World!" > /var/www/ezekielogunewu.tech/html/index.html',
+  require => Exec['change mode2'],
+}
+
+exec { 'config':
+  command => |
+  'printf %s "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/ezekielogunewu.tech/html;
+	index index.html index.htm;
+
+	server_name ezekielogunewu.tech;
 
 	location /redirect_me {
 		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
 	}
-}",
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
+}" > /etc/nginx/sites-available/default',
   notify  => Service['nginx'],
   require => Exec['install nginx'],
 }
