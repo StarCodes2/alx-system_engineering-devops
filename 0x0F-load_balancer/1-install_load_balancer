@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Install and configure HAproxy so that it sends traffic to two servers using the roundrobin algorithm
+
+apt-get install --no-install-recommends software-properties-common
+add-apt-repository ppa:vbernat/haproxy-2.8
+apt-get update
+apt-get install haproxy=2.8.\*
+
+echo "ENABLED=1" >> /etc/default/haproxy
+mv /etc/haproxy/haproxy.cfg{,.original}
+touch /etc/haproxy/haproxy.cfg
+
+printf %s "global
+	log 127.0.0.1 local0 notice
+	maxconn 3000
+	user haproxy
+	group haproxy
+
+defaults
+	log global
+	mode http
+	balance roundrobin
+
+frontend website
+	bind :80
+	default_backend servers
+
+backend servers
+	server 468530-web-01 18.214.89.20
+	server 468530-web-02 52.203.53.113
+" >> /etc/haproxy/haproxy.cfg
+
+service haproxy start
