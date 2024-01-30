@@ -7,33 +7,17 @@ apt-get update
 apt-get install -y haproxy=2.8.\*
 
 echo "ENABLED=1" >> /etc/default/haproxy
-mv /etc/haproxy/haproxy.cfg{,.original}
-touch /etc/haproxy/haproxy.cfg
+cp /etc/haproxy/haproxy.cfg{,.original}
 
-printf %s "global
-	log /dev/log local0
-	log /dev/log local1 notice
-	maxconn 2000
-	user haproxy
-	group haproxy
-
-defaults
-	log global
-	mode http
-	option httplog
-	option dontlognull
-	timeout connect 5000
-	timeout client 10000
-	timeout server 10000
-
-frontend website
-	bind :80
+printf %s "
+frontend balancer
+	bind *:80
 	default_backend servers
 
 backend servers
 	balance roundrobin
-	server 468530-web-01 18.214.89.20
-	server 468530-web-02 52.203.53.113
+	server 468530-web-01 18.214.89.20:80 check
+	server 468530-web-02 52.203.53.113:80 check
 " >> /etc/haproxy/haproxy.cfg
 
-service haproxy start
+service haproxy restart
