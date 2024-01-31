@@ -48,4 +48,5 @@ exec { 'config':
 
 exec { 'restart':
   command => 'service nginx restart',
+  require => Exec['config'],
 }
