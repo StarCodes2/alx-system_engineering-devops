@@ -10,7 +10,7 @@ printf %s "server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	root /var/www/html;
-	index index.html index.thm;
+	index index.html index.htm;
 	add_header X-Served-By $HOSTNAME;
 
 	location /redirect_me {
