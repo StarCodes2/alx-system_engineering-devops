@@ -8,7 +8,7 @@ sub_domain () {
 
 if [ "$#" == 1 ]
 then
-  domain "$1" "www"
+  sub_domain "$1" "www"
   sub_domain "$1" "lb-01"
   sub_domain "$1" "web-01"
   sub_domain "$1" "web-02"
