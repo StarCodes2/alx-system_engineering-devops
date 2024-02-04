@@ -1,11 +1,10 @@
 # Install and configure Nginx so that its HTTP response comtains a custom header
-
 $config_nginx = "server {
         listen 80 default_server;
         listen [::]:80 default_server;
         root /var/www/html;
         index index.html index.htm;
-        add_header X-Served-By ${HOSTNAME};
+        add_header X-Served-By ${hostname};
 
         location /redirect_me {
                 return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
@@ -19,7 +18,7 @@ $config_nginx = "server {
 }"
 
 exec { 'apt-get update':
-  path   => '/usr/bin/:/usr/local/bin/:/bin/'
+  path   => '/usr/bin/:/usr/local/bin/:/bin/',
 }
 
 exec { 'apt-get install -y nginx':
@@ -44,7 +43,7 @@ file { '/var/www/html/404.html':
   require => File['/var/www/html/index.html'],
 }
 
-exec { '/etc/nginx/sites-available/default':
+file { '/etc/nginx/sites-available/default':
   ensure  => 'present',
   content => $config_nginx,
   require => File['/var/www/html/404.html'],
@@ -52,5 +51,5 @@ exec { '/etc/nginx/sites-available/default':
 
 exec { 'nginx restart':
   path    => '/etc/init.d/',
-  require => Exec['/etc/nginx/sites-available/default'],
+  require => File['/etc/nginx/sites-available/default'],
 }
