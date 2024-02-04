@@ -20,31 +20,37 @@ $config_nginx = "server {
 
 exec { 'apt-get update':
   path   => '/usr/bin/:/usr/local/bin/:/bin/'
-} ->
+}
 
 exec { 'apt-get install -y nginx':
-  path   => '/usr/bin/:/usr/local/bin/:/bin/'
-} ->
+  path    => '/usr/bin/:/usr/local/bin/:/bin/',
+  require => Exec['apt-get update'],
+}
 
 exec { 'mkdir -p /var/www/html':
-  path   => '/usr/bin/:/usr/local/bin/:/bin/'
-} ->
+  path    => '/usr/bin/:/usr/local/bin/:/bin/',
+  require => Exec['apt-get install -y nginx'],
+}
 
 file { '/var/www/html/index.html':
   ensure  => 'present',
-  content => 'Hello World!'
-} ->
+  content => 'Hello World!',
+  require => Exec['mkdir -p /var/www/html'],
+}
 
 file { '/var/www/html/404.html':
   ensure  => 'present',
-  content => "Ceci n'est pas une page"
-} ->
+  content => "Ceci n'est pas une page",
+  require => File['/var/www/html/index.html'],
+}
 
 exec { '/etc/nginx/sites-available/default':
   ensure  => 'present',
-  content => $config_nginx
-} ->
+  content => $config_nginx,
+  require => File['/var/www/html/404.html'],
+}
 
 exec { 'nginx restart':
-  path   => '/etc/init.d/'
+  path    => '/etc/init.d/',
+  require => Exec['/etc/nginx/sites-available/default'],
 }
