@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     with open("todo_all_employees.json", "w") as jsonfile:
         json.dump({u.get("id"): [{
-                "username": user.get("username"),
+                "username": u.get("username"),
                 "task": todo.get("title"),
                 "completed": todo.get("completed")
             } for todo in requests.get(url + "todos",
