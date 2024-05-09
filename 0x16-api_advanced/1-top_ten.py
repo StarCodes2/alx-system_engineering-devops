@@ -12,12 +12,12 @@ def top_ten(subreddit):
         "User-Agent": "linux:api.request.red:v1.0.0 (by /u/Muted_Reason6144)"
     }
     param = {"limit": 10}
-    response = requests.get(url, headers=headers, params=param,
+    res = requests.get(url, headers=headers, params=param,
                             allow_redirects=False)
-    if response.status_code != 200:
+    if res.status_code != 200:
         print("None")
         return
 
-    result = response.json().get("data")
+    result = res.json().get("data")
     for p in result.get("children"):
         print(p.get("data").get("title"))
