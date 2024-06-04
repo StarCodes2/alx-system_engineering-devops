@@ -11,7 +11,11 @@ def top_ten(subreddit):
     headers = {
         "User-Agent": "linux:api.request.red:v1.0.0 (by /u/Muted_Reason6144)"
     }
-    param = {"limit": 10}
+    param = {
+        "count": 0,
+        "after": "",
+        "limit": 10
+    }
     res = requests.get(url, headers=headers, params=param,
                        allow_redirects=False)
     if res.status_code != 200:
