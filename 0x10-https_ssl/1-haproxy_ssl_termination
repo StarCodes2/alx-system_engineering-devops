@@ -38,5 +38,5 @@ frontend balancer
 
 backend servers
         balance roundrobin
-        server 468530-web-01 54.88.33.51:80 check
-        server 468530-web-02 100.26.50.21:80 check
+        server 468530-web-01 34.202.234.78:80 check
+        server 468530-web-02 107.23.105.205:80 check
