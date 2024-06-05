@@ -16,8 +16,8 @@ frontend balancer
 
 backend servers
 	balance roundrobin
-	server 468530-web-01 54.234.79.141:80 check
-	server 468530-web-02 54.236.48.131:80 check
+	server 468530-web-01 34.202.234.78:80 check
+	server 468530-web-02 107.23.105.205:80 check
 " >> /etc/haproxy/haproxy.cfg
 
 service haproxy restart
